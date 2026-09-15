@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b4f5a" />
+  <meta name="description" content="منصة طلاب كلية العلوم - جامعة الأزهر بنين وبنات" />
+  <title>لوحة المقررات والمحاضرات | AZU Science Portal</title>
+
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./logo.png" type="image/png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-cream:       #f4eedb;
+      --bg-card:        #fffcf4;
+      --ink-primary:    #0b4f5a;
+      --ink-dark:       #07343b;
+      --ink-muted:      #3a6b73;
+      --accent-gold:    #c9882b;
+      --accent-green:   #2e7d32;
+      --border-sketch:  #0b4f5a;
+      --shadow-sketch:  4px 4px 0px #0b4f5a;
+      --shadow-hover:   6px 6px 0px #07343b;
+      --radius-sketch:  16px 20px 14px 18px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box; margin: 0; padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      background-image: radial-gradient(#ded1b6 1.2px, transparent 1.2px);
+      background-size: 24px 24px;
+      color: var(--ink-dark);
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── Top Bar ─────────────────────────────────── */
+    .app-topbar {
+      background: var(--bg-card);
+      border-bottom: 3px solid var(--border-sketch);
+      box-shadow: 0 4px 12px rgba(11,79,90,0.08);
+      position: sticky;
+      top: 0; z-index: 100;
+      padding: 10px 16px;
+    }
+    .topbar-container {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .topbar-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--ink-primary);
+    }
+    .brand-logo-img { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--ink-primary); object-fit: cover; }
+    .brand-text h1  { font-size: 1.05rem; font-weight: 800; color: var(--ink-primary); line-height: 1.2; }
+    .brand-text span { font-size: 0.75rem; color: var(--ink-muted); font-weight: 600; }
+    .topbar-controls { display: flex; align-items: center; gap: 10px; }
+    .role-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 700;
+      border: 2px solid var(--border-sketch); white-space: nowrap;
+    }
+    .badge-admin   { background: #fde8e8; color: #9b1c1c; }
+    .badge-student { background: #def7ec; color: #03543f; }
+    .badge-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .badge-dot.admin   { background: #e02424; }
+    .badge-dot.student { background: #0e9f6e; }
+    .btn-nav-exit {
+      background: var(--bg-card); border: 2px solid var(--border-sketch);
+      padding: 6px 12px; border-radius: 12px;
+      font-weight: 700; font-size: 0.82rem; color: var(--ink-primary);
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-nav-exit:hover { background: #e7dfc9; transform: translateY(-2px); }
+
+    /* ── Main ────────────────────────────────────── */
+    .app-main-content {
+      max-width: 1200px; width: 100%;
+      margin: 0 auto; padding: 20px 14px 60px; flex: 1;
+    }
+
+    /* ── Breadcrumbs ─────────────────────────────── */
+    .app-breadcrumbs {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      background: var(--bg-card); padding: 10px 16px;
+      border: 2px solid var(--border-sketch); border-radius: 12px;
+      box-shadow: 2px 2px 0px var(--border-sketch);
+      margin-bottom: 20px;
+      font-size: 0.88rem; font-weight: 700; color: var(--ink-muted);
+    }
+    .bc-item { cursor: pointer; color: var(--ink-primary); transition: color 0.15s; }
+    .bc-item:hover { text-decoration: underline; color: var(--accent-gold); }
+    .bc-item.active { color: var(--ink-dark); cursor: default; }
+    .bc-sep { color: #aaa; }
+
+    /* ── Branch Switch ───────────────────────────── */
+    .campus-switch-section { margin-bottom: 22px; }
+    .section-heading {
+      font-size: 1rem; font-weight: 800; color: var(--ink-primary);
+      margin-bottom: 10px;
+    }
+    .campus-tabs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .campus-card-btn {
+      background: var(--bg-card); border: 3px solid var(--border-sketch);
+      border-radius: var(--radius-sketch); padding: 14px 18px;
+      box-shadow: var(--shadow-sketch); cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.2s cubic-bezier(0.175,0.885,0.32,1.275); text-align: right;
+    }
+    .campus-card-btn:hover { transform: translate(-3px,-3px); box-shadow: var(--shadow-hover); }
+    .campus-card-btn.active { background: var(--ink-primary); color: #fff; border-color: var(--ink-dark); }
+    .campus-card-btn.active .campus-card-name { color: #fff; }
+    .campus-card-btn.active .campus-sub       { color: #e0f2f1; }
+    .campus-card-name { font-size: 1.1rem; font-weight: 800; color: var(--ink-primary); display: block; }
+    .campus-sub       { font-size: 0.8rem;  color: var(--ink-muted); font-weight: 600; margin-top: 4px; display: block; }
+
+    /* ── Department Tabs ─────────────────────────── */
+    .dept-selection-section { margin-bottom: 22px; }
+    .dept-tabs-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+    .dept-tab-btn {
+      background: var(--bg-card); border: 2px solid var(--border-sketch);
+      border-radius: 14px; padding: 8px 16px;
+      font-family: inherit; font-size: 0.92rem; font-weight: 700;
+      color: var(--ink-primary); cursor: pointer; white-space: nowrap;
+      box-shadow: 3px 3px 0px var(--border-sketch); transition: all 0.2s;
+    }
+    .dept-tab-btn:hover   { background: #fdfaf1; transform: translateY(-2px); }
+    .dept-tab-btn.active  { background: var(--ink-primary); color: #fff; box-shadow: 3px 3px 0px var(--ink-dark); }
+
+    .loading-text     { color: var(--ink-muted); font-size: 0.9rem; font-style: italic; padding: 6px; }
+    .empty-inline-text{ color: #999; font-size: 0.88rem; padding: 6px; }
+
+    /* ── Subjects Grid ───────────────────────────── */
+    .subjects-list-container { margin-bottom: 24px; }
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px; margin-bottom: 14px;
+    }
+    .subject-card-btn {
+      background: var(--bg-card); border: 3px solid var(--border-sketch);
+      border-radius: var(--radius-sketch); padding: 16px 12px;
+      box-shadow: var(--shadow-sketch); cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      text-align: center; font-family: inherit;
+      transition: all 0.2s;
+    }
+    .subject-card-btn:hover  { transform: translate(-2px,-2px); box-shadow: var(--shadow-hover); }
+    .subject-card-btn.active { background: var(--ink-primary); color: #fff; border-color: var(--ink-dark); }
+    .subject-card-btn.active .sub-name { color: #fff; }
+    .sub-icon { font-size: 1.6rem; }
+    .sub-name { font-size: 0.9rem; font-weight: 800; color: var(--ink-primary); line-height: 1.3; }
+
+    .loading-block {
+      text-align: center; padding: 32px 20px;
+      color: var(--ink-muted); font-style: italic;
+    }
+
+    .admin-upload-row {
+      display: flex; justify-content: flex-end; margin-top: 8px;
+    }
+    .btn-upload-admin {
+      background: var(--accent-gold); color: #fff;
+      border: 2px solid var(--border-sketch);
+      padding: 8px 18px; border-radius: 12px;
+      font-family: inherit; font-weight: 800; font-size: 0.88rem;
+      cursor: pointer; box-shadow: 3px 3px 0px var(--border-sketch);
+      transition: all 0.2s;
+    }
+    .btn-upload-admin:hover { background: #b57722; transform: translateY(-2px); }
+
+    /* ── Files Grid ──────────────────────────────── */
+    .files-section-title {
+      font-size: 1.05rem; font-weight: 800; color: var(--ink-primary);
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 2px dashed #ded1b6;
+    }
+    .files-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .file-card {
+      background: var(--bg-card); border: 2px solid var(--border-sketch);
+      border-radius: 14px; padding: 14px;
+      box-shadow: 2px 2px 0px rgba(11,79,90,0.15);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .file-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .file-info { flex: 1; min-width: 0; }
+    .file-name {
+      font-size: 0.88rem; font-weight: 700; color: var(--ink-dark);
+      display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .file-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .btn-lec-download {
+      background: var(--ink-primary); color: #fff;
+      border: none; padding: 6px 10px; border-radius: 8px;
+      font-family: inherit; font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-lec-download:hover { background: var(--ink-dark); }
+    .btn-lec-external {
+      background: var(--bg-card); color: var(--ink-primary);
+      border: 1.5px solid var(--border-sketch);
+      padding: 6px 10px; border-radius: 8px;
+      font-size: 0.78rem; font-weight: 700;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-lec-external:hover { background: var(--ink-primary); color: #fff; }
+
+    /* ── Empty State ─────────────────────────────── */
+    .empty-subjects-state {
+      text-align: center; padding: 44px 20px;
+      background: var(--bg-card);
+      border: 3px dashed var(--border-sketch);
+      border-radius: var(--radius-sketch);
+    }
+    .empty-subjects-state h3 { color: var(--ink-primary); margin-bottom: 8px; }
+    .empty-subjects-state p  { color: var(--ink-muted); font-size: 0.9rem; }
+
+    /* ── Modals ──────────────────────────────────── */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(7,52,59,0.72);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; padding: 12px;
+    }
+    .modal-backdrop.hidden { display: none; }
+
+    .modal-box {
+      background: var(--bg-card); border: 3px solid var(--border-sketch);
+      border-radius: var(--radius-sketch); padding: 22px;
+      width: 100%; max-width: 520px;
+      box-shadow: 8px 8px 0px var(--ink-dark);
+      max-height: 92vh; overflow-y: auto;
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 2px dashed #ded1b6; padding-bottom: 12px; margin-bottom: 16px;
+    }
+    .modal-header h3 { font-size: 1.1rem; font-weight: 800; color: var(--ink-primary); }
+    .btn-modal-close { background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: var(--ink-muted); }
+
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-weight: 700; font-size: 0.85rem; margin-bottom: 5px; color: var(--ink-dark); }
+    .form-control {
+      width: 100%; background: #fff; border: 2px solid var(--border-sketch);
+      border-radius: 10px; padding: 9px 12px; font-family: inherit; font-size: 0.9rem; outline: none;
+    }
+
+    /* Upload drop zone */
+    .upload-drop-zone {
+      border: 3px dashed var(--border-sketch); border-radius: 14px;
+      background: #fff; padding: 28px 16px;
+      text-align: center; cursor: pointer;
+      transition: all 0.2s; color: var(--ink-muted);
+      font-size: 0.9rem; font-weight: 700;
+    }
+    .upload-drop-zone:hover, .upload-drop-zone.drag-over {
+      background: #edf9f5; border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+    .upload-drop-zone input[type="file"] { display: none; }
+
+    .btn-primary-sketch {
+      background: var(--ink-primary); color: #fff;
+      border: 2px solid var(--ink-dark); padding: 10px 20px;
+      border-radius: 12px; font-family: inherit; font-weight: 800; font-size: 0.95rem;
+      cursor: pointer; width: 100%;
+      box-shadow: 3px 3px 0px var(--ink-dark); transition: all 0.2s;
+    }
+    .btn-primary-sketch:hover   { background: var(--ink-dark); }
+    .btn-primary-sketch:disabled{ opacity: 0.6; cursor: not-allowed; }
+
+    .upload-status {
+      margin-top: 10px; font-size: 0.88rem; font-weight: 700;
+      min-height: 22px; color: var(--accent-green);
+    }
+
+    /* ── Archive Viewer ──────────────────────────── */
+    .archive-viewer-modal-box {
+      background: #1e2428; border: 3px solid var(--border-sketch);
+      border-radius: var(--radius-sketch);
+      width: 96vw; max-width: 1100px; height: 92vh;
+      display: flex; flex-direction: column; overflow: hidden;
+      box-shadow: 10px 10px 0px var(--ink-dark);
+    }
+    .archive-viewer-toolbar {
+      background: #0f161a; color: #fff;
+      padding: 10px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      border-bottom: 2px solid #2a353c;
+    }
+    .archive-toolbar-title {
+      font-size: 0.95rem; font-weight: 800; color: #e2f1f5;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;
+    }
+    .archive-toolbar-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .btn-archive-tool {
+      background: #1c2830; border: 1px solid #3d4f5b; color: #e0f2f1;
+      padding: 5px 12px; border-radius: 8px;
+      font-family: inherit; font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; text-decoration: none; transition: all 0.2s;
+    }
+    .btn-archive-tool:hover { background: var(--ink-primary); color: #fff; }
+    .btn-archive-close {
+      background: transparent; border: none;
+      color: #ff8a80; font-size: 1.6rem; cursor: pointer; line-height: 1;
+    }
+    .archive-viewer-body { flex: 1; background: #141a1e; position: relative; }
+    .archive-viewer-body iframe { width: 100%; height: 100%; border: none; }
+
+    /* ── Toast ───────────────────────────────────── */
+    .app-toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--ink-dark); color: #fff;
+      padding: 10px 20px; border-radius: 30px;
+      font-weight: 700; font-size: 0.88rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      z-index: 2000; transition: transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+      pointer-events: none; white-space: nowrap;
+    }
+    .app-toast.show { transform: translateX(-50%) translateY(0); }
+
+    .hidden { display: none !important; }
+
+    /* ── Responsive ──────────────────────────────── */
+    @media (max-width: 600px) {
+      .brand-text span { display: none; }
+      .archive-viewer-modal-box { width: 100vw; height: 100vh; border-radius: 0; }
+      .subjects-grid { grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); }
+      .files-grid    { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="app-topbar">
+    <div class="topbar-container">
+      <a href="./index.html" class="topbar-brand">
+        <img src="./logo.png" alt="AZU Science Logo" class="brand-logo-img" />
+        <div class="brand-text">
+          <h1>منصة طلاب كلية العلوم</h1>
+          <span>جامعة الأزهر | AZU Science</span>
+        </div>
+      </a>
+
+      <div class="topbar-controls">
+        <div id="userRoleBadge" class="role-badge badge-student">
+          <span class="badge-dot student"></span> طالب (Student)
+        </div>
+        <!-- Admin Upload Button (admin only) -->
+        <button class="btn-upload-admin admin-only hidden" onclick="openUploadModal()">
+          رفع ملفات
+        </button>
+        <button class="btn-nav-exit" onclick="handleLogout()">تسجيل خروج</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="app-main-content">
+
+    <!-- Breadcrumbs -->
+    <div id="appBreadcrumbs" class="app-breadcrumbs">
+      <span class="bc-item">فرع البنين</span>
+    </div>
+
+    <!-- 1. Branch Selection -->
+    <section class="campus-switch-section">
+      <h3 class="section-heading">الفرع الأكاديمي:</h3>
+      <div class="campus-tabs-grid">
+        <button class="campus-card-btn active" data-branch-id="boys" onclick="selectBranch('boys')">
+          <div>
+            <span class="campus-card-name">كلية العلوم (بنين)</span>
+            <span class="campus-sub">مدينة نصر - القاهرة</span>
+          </div>
+        </button>
+        <button class="campus-card-btn" data-branch-id="girls" onclick="selectBranch('girls')">
+          <div>
+            <span class="campus-card-name">كلية العلوم (بنات)</span>
+            <span class="campus-sub">مدينة نصر - القاهرة</span>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. Department Tabs -->
+    <section class="dept-selection-section">
+      <h3 class="section-heading">الأقسام العلمية:</h3>
+      <div id="departmentTabsContainer" class="dept-tabs-container">
+        <span class="loading-text">جاري تحميل الأقسام...</span>
+      </div>
+    </section>
+
+    <!-- 3. Subjects Grid -->
+    <section class="subjects-list-container">
+      <div id="subjectsListContainer">
+        <div class="empty-subjects-state">
+          <h3>اختر قسماً لعرض المواد الدراسية</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Files List -->
+    <section id="filesListContainer">
+      <!-- rendered dynamically -->
+    </section>
+
+  </main>
+
+  <!-- ================================================================
+       ARCHIVE.ORG STYLE DOCUMENT VIEWER MODAL
+       ================================================================ -->
+  <div id="archiveDocViewerModal" class="modal-backdrop hidden">
+    <div class="archive-viewer-modal-box">
+      <div class="archive-viewer-toolbar">
+        <span id="archiveDocTitle" class="archive-toolbar-title">عرض المستند</span>
+        <div class="archive-toolbar-actions">
+          <a id="archiveDocExternalBtn" href="#" target="_blank" rel="noopener" class="btn-archive-tool">
+            فتح في Drive
+          </a>
+          <button class="btn-archive-close" onclick="closeArchiveDocViewer()">&times;</button>
+        </div>
+      </div>
+      <div class="archive-viewer-body">
+        <iframe id="archiveDocIframe" src="about:blank" allow="autoplay"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       ADMIN UPLOAD MODAL
+       ================================================================ -->
+  <div id="uploadModal" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>رفع ملفات على Google Drive</h3>
+        <button class="btn-modal-close" onclick="closeUploadModal()">&times;</button>
+      </div>
+
+      <form id="uploadForm">
+
+        <div class="form-group">
+          <label>الفرع الأكاديمي *</label>
+          <select id="uploadBranchSelect" class="form-control" required>
+            <option value="boys">فرع البنين</option>
+            <option value="girls">فرع البنات</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>اسم القسم *</label>
+          <input type="text" id="uploadDeptInput" class="form-control"
+            placeholder="مثال: قسم الكيمياء" required autocomplete="off" />
+          <small style="color:#777;font-size:0.75rem;margin-top:3px;display:block;">
+            اكتب اسم القسم كما هو في Google Drive. إن لم يكن موجوداً سيُنشأ تلقائياً.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>اسم المادة *</label>
+          <input type="text" id="uploadSubjectInput" class="form-control"
+            placeholder="مثال: كيمياء عضوية" required autocomplete="off" />
+          <small style="color:#777;font-size:0.75rem;margin-top:3px;display:block;">
+            اكتب اسم المادة. إن لم تكن موجودة سيُنشأ مجلدها تلقائياً.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>الملفات *</label>
+          <div id="uploadDropZone" class="upload-drop-zone">
+            <input type="file" id="uploadFileInput" multiple />
+            <div id="uploadFileLabel">اضغط هنا أو اسحب الملفات للرفع</div>
+          </div>
+        </div>
+
+        <div id="uploadStatusMsg" class="upload-status"></div>
+
+        <button type="submit" id="uploadSubmitBtn" class="btn-primary-sketch" style="margin-top:12px;">
+          رفع على Google Drive
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts (NO ai-layer.js) -->
+  <script src="./gas-client.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

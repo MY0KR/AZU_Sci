@@ -1,0 +1,21 @@
+{
+  "appId": "com.azuscience.studentportal",
+  "appName": "AZU Science Portal",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "backgroundColor": "#f4eedb",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "backgroundColor": "#0b4f5a",
+      "style": "DARK"
+    }
+  }
+}

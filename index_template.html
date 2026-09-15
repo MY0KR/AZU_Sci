@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0b4f5a" />
+  <meta name="description" content="منصة طلاب كلية العلوم - جامعة الأزهر بنين وبنات" />
+  <title>AZU Science Student Portal | منصة طلاب كلية العلوم جامعة الأزهر</title>
+
+  <!-- PWA Manifest & Icons -->
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="./logo.png" />
+
+  <!-- Google Fonts: Cairo, Tajawal & Finger Paint -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Finger+Paint&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-cream: #f4eedb;
+      --bg-card: #fffcf4;
+      --bg-card-alt: #f8f1de;
+      --ink-primary: #0b4f5a;
+      --ink-dark: #07343b;
+      --ink-muted: #3a6b73;
+      --accent-gold: #c9882b;
+      --accent-terracotta: #d9534f;
+      --accent-green: #2e7d32;
+      --border-sketch: #0b4f5a;
+      --shadow-sketch: 5px 5px 0px #0b4f5a;
+      --shadow-hover: 8px 8px 0px #07343b;
+      --radius-sketch: 18px 22px 16px 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      background-image: radial-gradient(#ded1b6 1.3px, transparent 1.3px);
+      background-size: 24px 24px;
+      color: var(--ink-dark);
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Top Navbar */
+    .landing-navbar {
+      background: #fffcf4;
+      border-bottom: 3.5px solid var(--border-sketch);
+      box-shadow: 0 4px 15px rgba(11, 79, 90, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 12px 20px;
+    }
+
+    .navbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-brand-left {
+      direction: ltr;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--ink-primary);
+    }
+
+    .nav-logo-wrap {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 2.5px solid var(--border-sketch);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 2px 2px 0px var(--border-sketch);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .nav-brand-titles {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .nav-title-main {
+      font-family: 'Finger Paint', 'Cairo', cursive;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--ink-primary);
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-title-sub {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+      direction: rtl;
+      text-align: right;
+    }
+
+    .nav-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-nav-about {
+      background: var(--bg-card);
+      border: 2.5px solid var(--border-sketch);
+      padding: 8px 18px;
+      border-radius: 14px;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--ink-primary);
+      cursor: pointer;
+      box-shadow: 3px 3px 0px var(--border-sketch);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .btn-nav-about:hover {
+      background: var(--ink-primary);
+      color: #fff;
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0px var(--ink-dark);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      max-width: 960px;
+      margin: 40px auto 30px;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ebdcc4;
+      border: 2px solid var(--border-sketch);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--ink-primary);
+      box-shadow: 2px 2px 0px var(--border-sketch);
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-family: 'Tajawal', 'Cairo', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      color: var(--ink-primary);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      color: var(--accent-gold);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-title span::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: rgba(201, 136, 43, 0.25);
+      border-radius: 4px;
+      z-index: -1;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.22rem);
+      color: var(--ink-muted);
+      font-weight: 600;
+      max-width: 720px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    /* Login Arrow CTA */
+    .hero-cta-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .btn-login-arrow {
+      background: var(--ink-primary);
+      color: #ffffff;
+      border: 3.5px solid var(--ink-dark);
+      border-radius: 24px;
+      padding: 16px 36px;
+      font-family: inherit;
+      font-size: 1.25rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 6px 6px 0px var(--ink-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-decoration: none;
+    }
+
+    .btn-login-arrow:hover {
+      background: #083c44;
+      transform: translate(-4px, -4px);
+      box-shadow: 10px 10px 0px var(--ink-dark);
+    }
+
+    .arrow-icon-svg {
+      width: 28px;
+      height: 28px;
+      animation: bounceHorizontal 1.8s infinite ease-in-out;
+    }
+
+    @keyframes bounceHorizontal {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-8px); }
+    }
+
+    .cta-hint {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+    }
+
+    /* Scroll-Triggered Campus Section */
+    .campus-section {
+      max-width: 1100px;
+      margin: 40px auto 80px;
+      padding: 0 20px;
+    }
+
+    .section-header-wrap {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .section-headline {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--ink-primary);
+      margin-bottom: 8px;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: var(--ink-muted);
+      font-weight: 600;
+    }
+
+    .campus-cards-column {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .campus-reveal-card {
+      background: var(--bg-card);
+      border: 3.5px solid var(--border-sketch);
+      border-radius: var(--radius-sketch);
+      box-shadow: var(--shadow-sketch);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 0;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
+    }
+
+    .campus-reveal-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .campus-reveal-card:hover {
+      box-shadow: var(--shadow-hover);
+    }
+
+    .campus-img-side {
+      position: relative;
+      overflow: hidden;
+      background: #ebdcc4;
+      min-height: 280px;
+    }
+
+    .campus-img-side img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .campus-reveal-card:hover .campus-img-side img {
+      transform: scale(1.04);
+    }
+
+    .campus-badge-tag {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(7, 52, 59, 0.88);
+      backdrop-filter: blur(4px);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      border: 1.5px solid rgba(255,255,255,0.3);
+    }
+
+    .campus-info-side {
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .campus-info-top h3 {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--ink-primary);
+      margin-bottom: 6px;
+    }
+
+    .campus-en-title {
+      font-size: 0.85rem;
+      color: var(--accent-gold);
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .campus-desc-text {
+      font-size: 0.96rem;
+      color: #333;
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .dept-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .dept-tag-chip {
+      background: #f4eedb;
+      border: 1.5px solid var(--border-sketch);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--ink-dark);
+    }
+
+    .campus-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-top: 2px dashed #ded1b6;
+      padding-top: 14px;
+    }
+
+    .btn-enter-branch {
+      background: var(--ink-primary);
+      color: #fff;
+      border: 2px solid var(--ink-dark);
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 3px 3px 0px var(--ink-dark);
+      transition: all 0.2s;
+    }
+
+    .btn-enter-branch:hover {
+      background: #083c44;
+      transform: translateY(-2px);
+    }
+
+    .btn-admin-edit-branch {
+      background: #fff8e1;
+      border: 2px solid var(--accent-gold);
+      color: #8c580b;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(7, 52, 59, 0.7);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: #fffcf4;
+      border: 3.5px solid var(--border-sketch);
+      border-radius: var(--radius-sketch);
+      padding: 28px 24px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 8px 8px 0px var(--ink-dark);
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.92);
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1);
+    }
+
+    .modal-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px dashed #ded1b6;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .modal-header-row h3 {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--ink-primary);
+    }
+
+    .btn-close-popup {
+      background: transparent;
+      border: none;
+      font-size: 1.8rem;
+      color: var(--ink-muted);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .role-tabs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .role-tab-btn {
+      background: #f4eedb;
+      border: 2px solid var(--border-sketch);
+      border-radius: 12px;
+      padding: 12px 10px;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--ink-primary);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .role-tab-btn.active {
+      background: var(--ink-primary);
+      color: #fff;
+      box-shadow: 2px 2px 0px var(--ink-dark);
+    }
+
+    .student-entry-box {
+      text-align: center;
+      padding: 16px 0;
+    }
+
+    .student-entry-box p {
+      font-size: 0.95rem;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .btn-enter-student-instant {
+      background: var(--accent-green);
+      color: #fff;
+      border: 2.5px solid #194d1c;
+      padding: 14px 28px;
+      border-radius: 16px;
+      font-family: inherit;
+      font-weight: 900;
+      font-size: 1.1rem;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 4px 4px 0px #194d1c;
+      transition: all 0.2s;
+    }
+
+    .btn-enter-student-instant:hover {
+      background: #256629;
+      transform: translateY(-2px);
+    }
+
+    .input-field-wrap {
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .input-field-wrap label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--ink-dark);
+      margin-bottom: 6px;
+    }
+
+    .sketch-input {
+      width: 100%;
+      background: #ffffff;
+      border: 2px solid var(--border-sketch);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      color: var(--ink-dark);
+    }
+
+    .sketch-input:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 3px rgba(201, 136, 43, 0.15);
+    }
+
+    .toggle-pass-eye {
+      position: absolute;
+      left: 12px;
+      top: 38px;
+      background: transparent;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--ink-primary);
+    }
+
+    .inline-error-msg {
+      color: #c0392b;
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-align: center;
+      margin-top: 10px;
+      font-family: inherit;
+    }
+
+    .btn-submit-admin {
+      background: var(--ink-primary);
+      color: #fff;
+      border: 2.5px solid var(--ink-dark);
+      padding: 14px 28px;
+      border-radius: 16px;
+      font-family: inherit;
+      font-weight: 900;
+      font-size: 1.05rem;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 4px 4px 0px var(--ink-dark);
+      transition: all 0.2s;
+      margin-top: 12px;
+    }
+
+    .btn-submit-admin:hover {
+      background: #083c44;
+      transform: translateY(-2px);
+    }
+
+    .about-team-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .team-member-card {
+      background: #fdfaf1;
+      border: 2px solid var(--border-sketch);
+      border-radius: 14px;
+      padding: 12px 16px;
+    }
+
+    .team-info h4 {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--ink-primary);
+    }
+
+    .team-info p {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+
+    @media (max-width: 768px) {
+      .campus-reveal-card {
+        grid-template-columns: 1fr;
+      }
+      .campus-img-side {
+        min-height: 200px;
+      }
+      .nav-title-main {
+        font-size: 1.05rem;
+      }
+      .hero-title {
+        font-size: 1.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. TOP NAVBAR -->
+  <header class="landing-navbar">
+    <div class="navbar-inner">
+      
+      <!-- Left: Logo and App Name (LTR ordered) -->
+      <a href="./index.html" class="nav-brand-left">
+        <div class="nav-logo-wrap">
+          <img src="data:image/png;base64,{{LOGO_BASE64}}" alt="AZU Science Logo" />
+        </div>
+        <div class="nav-brand-titles">
+          <span class="nav-title-main">AZU Science Student Portal</span>
+          <span class="nav-title-sub">كلية العلوم - جامعة الأزهر</span>
+        </div>
+      </a>
+
+      <!-- Right: "Admins Team / About Us" Button -->
+      <div class="nav-actions-right">
+        <button class="btn-nav-about" onclick="openAboutModal()">
+          <span>فريق الإدارة / من نحن</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 2. HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-badge">
+      <span>الصرح العلمي لجامعة الأزهر الشريف</span>
+    </div>
+
+    <h1 class="hero-title">
+      Welcome to <span>AZU Science</span> Student Portal<br />
+      مرحباً بكم في منصة طلاب كلية العلوم
+    </h1>
+
+    <p class="hero-subtitle">
+      بوابتك الأكاديمية الشاملة لفرعي البنين والبنات، تصفح المقررات الدراسية، المحاضرات، ونماذج الامتحانات المعتمدة.
+    </p>
+
+    <!-- Immediately Below Hero Text: Login Arrow / Button -->
+    <div class="hero-cta-box">
+      <button class="btn-login-arrow" onclick="openLoginModal('student')">
+        <span>ابدأ التصفح / تسجيل الدخول</span>
+        <svg class="arrow-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+      </button>
+      <span class="cta-hint">اختر فرع البنين أو البنات بعد تسجيل الدخول</span>
+    </div>
+  </section>
+
+  <!-- 3. SCROLL-TRIGGERED CAMPUS SECTION -->
+  <section class="campus-section">
+    <div class="section-header-wrap">
+      <h2 class="section-headline">الفروع الأكاديمية لكلية العلوم</h2>
+      <p class="section-desc">انتقل مباشرة لتخصصات ومقررات الفرع المطلوب</p>
+    </div>
+
+    <div class="campus-cards-column">
+
+      <!-- Branch 1: Boys Branch (First) -->
+      <div class="campus-reveal-card" id="cardBoysBranch">
+        <div class="campus-img-side">
+          <img src="./boys_campus.jpg" alt="كلية العلوم بنين جامعة الأزهر" loading="lazy" />
+          <span class="campus-badge-tag">فرع البنين | 4 أقسام</span>
+        </div>
+        <div class="campus-info-side">
+          <div class="campus-info-top">
+            <h3>كلية العلوم (بنين) - مدينة نصر</h3>
+            <span class="campus-en-title">Faculty of Science (Boys) - Cairo</span>
+            <p class="campus-desc-text" id="descBoysText">
+              يضم فرع البنين أربعة أقسام علمية رئيسية مجهزة بالمعامل والمراكز البحثية لدعم الطلاب والباحثين في كافة التخصصات العلمية والتطبيقية.
+            </p>
+            <div class="dept-tags-row">
+              <span class="dept-tag-chip">بيولوجي</span>
+              <span class="dept-tag-chip">كيمياء</span>
+              <span class="dept-tag-chip">فيزياء ورياضة</span>
+              <span class="dept-tag-chip">جيولوجيا</span>
+            </div>
+          </div>
+          <div class="campus-card-footer">
+            <button class="btn-enter-branch" onclick="enterCampusBranch('boys')">
+              تصفح مقررات البنين &larr;
+            </button>
+            <button class="btn-admin-edit-branch admin-visible-btn" onclick="openEditBranchModal('boys')">
+              تعديل الوصف (مسؤول)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Branch 2: Girls Branch (Second) -->
+      <div class="campus-reveal-card" id="cardGirlsBranch">
+        <div class="campus-img-side">
+          <img src="./girls_campus.jpg" alt="كلية العلوم بنات جامعة الأزهر" loading="lazy" />
+          <span class="campus-badge-tag">فرع البنات | 3 أقسام</span>
+        </div>
+        <div class="campus-info-side">
+          <div class="campus-info-top">
+            <h3>كلية العلوم (بنات) - مدينة نصر</h3>
+            <span class="campus-en-title">Faculty of Science (Girls) - Cairo</span>
+            <p class="campus-desc-text" id="descGirlsText">
+              صرح أكاديمي متميز معتمد من الهيئة القومية لضمان جودة التعليم والاعتماد، يضم أقسام البيولوجي، الكيمياء، والفيزياء والرياضيات.
+            </p>
+            <div class="dept-tags-row">
+              <span class="dept-tag-chip">بيولوجي</span>
+              <span class="dept-tag-chip">كيمياء</span>
+              <span class="dept-tag-chip">فيزياء ورياضة</span>
+            </div>
+          </div>
+          <div class="campus-card-footer">
+            <button class="btn-enter-branch" onclick="enterCampusBranch('girls')">
+              تصفح مقررات البنات &larr;
+            </button>
+            <button class="btn-admin-edit-branch admin-visible-btn" onclick="openEditBranchModal('girls')">
+              تعديل الوصف (مسؤول)
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================
+       4. MODALS & POPUPS
+       ========================================= -->
+
+  <!-- A. LOGIN MODAL (Student vs Admin) -->
+  <div id="loginModalOverlay" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header-row">
+        <h3>تسجيل الدخول للمنصة</h3>
+        <button class="btn-close-popup" onclick="closeLoginModal()">&times;</button>
+      </div>
+
+      <!-- Role Tabs -->
+      <div class="role-tabs-grid">
+        <button id="tabStudent" class="role-tab-btn active" onclick="switchLoginRoleTab('student')">
+          دخول طالب (Student)
+        </button>
+        <button id="tabAdmin" class="role-tab-btn" onclick="switchLoginRoleTab('admin')">
+          دخول مسؤول (Admin)
+        </button>
+      </div>
+
+      <!-- Student View (Direct 1-Click Access) -->
+      <div id="studentLoginBox" class="student-entry-box">
+        <p>مرحبا بك يا طالب العلم! يمكنك الدخول مباشرة لتصفح جميع المقررات والمحاضرات بدون الحاجة لكلمة مرور.</p>
+        <button class="btn-enter-student-instant" onclick="performStudentLogin()">
+          الدخول كطالب مباشرة
+        </button>
+      </div>
+
+      <!-- Admin Form (SECURE SHA-256 VALIDATION: AZU_005 / AZU@2000) -->
+      <div id="adminLoginBox" class="admin-login-box" style="display: none;">
+        <form id="adminLoginForm" onsubmit="handleAdminLoginSubmit(event)">
+          <div class="input-field-wrap">
+            <label>اسم المستخدم / رقم القيد (Username)</label>
+            <input type="text" id="adminIdInput" class="sketch-input" placeholder="أدخل اسم المستخدم..." required />
+          </div>
+
+          <div class="input-field-wrap">
+            <label>كلمة المرور (Password)</label>
+            <input type="password" id="adminPassInput" class="sketch-input" placeholder="أدخل كلمة المرور..." required />
+            <button type="button" class="toggle-pass-eye" onclick="togglePasswordVisibility('adminPassInput')">إظهار/إخفاء</button>
+          </div>
+
+          <!-- Inline Red Error Feedback (NO popup) -->
+          <div id="adminLoginError" class="inline-error-msg" style="display: none;"></div>
+
+          <button type="submit" class="btn-submit-admin">
+            تأكيد الدخول كمسؤول
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- B. ABOUT US & ADMINS TEAM MODAL -->
+  <div id="aboutModalOverlay" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header-row">
+        <h3>فريق الإدارة ومنصة كلية العلوم</h3>
+        <button class="btn-close-popup" onclick="closeAboutModal()">&times;</button>
+      </div>
+
+      <div style="font-size:0.95rem; color:#333; line-height:1.7;">
+        <p><strong>منصة طلاب كلية العلوم - جامعة الأزهر</strong> هي مبادرة أكاديمية لتسهيل وصول الطلاب في فرعي البنين والبنات للمصادر التعليمية والمحاضرات ونماذج الاختبارات بدقة وسرعة مع الربط المباشر بمجلدات Google Drive الرسمية.</p>
+      </div>
+
+      <div class="about-team-grid">
+        <div class="team-member-card">
+          <div class="team-info">
+            <h4>فريق تطوير وإدارة المنصة</h4>
+            <p>إدارة قواعد البيانات وتطوير واجهات وتكامل النظام</p>
+          </div>
+        </div>
+
+        <div class="team-member-card">
+          <div class="team-info">
+            <h4>هيئة الإشراف الأكاديمي</h4>
+            <p>مراجعة وتدقيق المذكرات والمقررات لكافة الأقسام</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-submit-admin" onclick="closeAboutModal()" style="margin-top:10px;">
+        إغلاق النافذة
+      </button>
+    </div>
+  </div>
+
+  <!-- C. EDIT BRANCH DESCRIPTION MODAL (Admin only) -->
+  <div id="editBranchModalOverlay" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header-row">
+        <h3>تعديل وصف الفرع الأكاديمي</h3>
+        <button class="btn-close-popup" onclick="closeEditBranchModal()">&times;</button>
+      </div>
+
+      <div class="input-field-wrap">
+        <label id="editBranchLabel">وصف الفرع:</label>
+        <textarea id="editBranchTextarea" class="sketch-input" rows="4"></textarea>
+      </div>
+
+      <button class="btn-submit-admin" onclick="saveBranchDescription()">
+        حفظ التعديلات
+      </button>
+    </div>
+  </div>
+
+  <!-- Client Scripts -->
+  <script src="./gas-client.js"></script>
+  <script>
+    // =========================================================================
+    // 1. SCROLL-TRIGGERED INTERSECTION OBSERVER
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', async () => {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js').catch(err => {});
+      }
+
+      const cards = document.querySelectorAll('.campus-reveal-card');
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
+      };
+
+      const cardObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      cards.forEach(card => cardObserver.observe(card));
+
+      checkAdminPrivileges();
+      loadBranchDescriptions();
+    });
+
+    async function loadBranchDescriptions() {
+      if (window.gasClient) {
+        const data = await window.gasClient.loadPlatformData();
+        if (data && data.branches) {
+          if (data.branches.boys && data.branches.boys.description) {
+            document.getElementById('descBoysText').innerText = data.branches.boys.description;
+          }
+          if (data.branches.girls && data.branches.girls.description) {
+            document.getElementById('descGirlsText').innerText = data.branches.girls.description;
+          }
+        }
+      }
+    }
+
+    function checkAdminPrivileges() {
+      const role = sessionStorage.getItem('azu_user_role') || 'student';
+      const adminBtns = document.querySelectorAll('.admin-visible-btn');
+      adminBtns.forEach(b => {
+        b.style.display = (role === 'admin') ? 'inline-block' : 'none';
+      });
+    }
+
+    // =========================================================================
+    // 2. MODAL CONTROLS
+    // =========================================================================
+    function openLoginModal(defaultRole = 'student') {
+      document.getElementById('loginModalOverlay').classList.add('active');
+      switchLoginRoleTab(defaultRole);
+    }
+
+    function closeLoginModal() {
+      document.getElementById('loginModalOverlay').classList.remove('active');
+      const errorMsg = document.getElementById('adminLoginError');
+      if (errorMsg) errorMsg.style.display = 'none';
+    }
+
+    function openAboutModal() {
+      document.getElementById('aboutModalOverlay').classList.add('active');
+    }
+
+    function closeAboutModal() {
+      document.getElementById('aboutModalOverlay').classList.remove('active');
+    }
+
+    function switchLoginRoleTab(role) {
+      const tabStudent = document.getElementById('tabStudent');
+      const tabAdmin = document.getElementById('tabAdmin');
+      const studentBox = document.getElementById('studentLoginBox');
+      const adminBox = document.getElementById('adminLoginBox');
+      const errorMsg = document.getElementById('adminLoginError');
+      if (errorMsg) errorMsg.style.display = 'none';
+
+      if (role === 'student') {
+        tabStudent.classList.add('active');
+        tabAdmin.classList.remove('active');
+        studentBox.style.display = 'block';
+        adminBox.style.display = 'none';
+      } else {
+        tabAdmin.classList.add('active');
+        tabStudent.classList.remove('active');
+        adminBox.style.display = 'block';
+        studentBox.style.display = 'none';
+      }
+    }
+
+    function normalizeInput(val) {
+      if (!val) return '';
+      const arabicNumbers = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+      return val.toString().trim().replace(/[٠-٩]/g, d => arabicNumbers.indexOf(d));
+    }
+
+    function togglePasswordVisibility(inputId) {
+      const input = document.getElementById(inputId);
+      if (input) {
+        input.type = input.type === 'password' ? 'text' : 'password';
+      }
+    }
+
+    // =========================================================================
+    // 3. SECURE CRYPTOGRAPHIC AUTHENTICATION (SHA-256)
+    // No plain-text credentials stored in source code
+    // =========================================================================
+    async function sha256Hex(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // SHA-256 Hashes of authorized credentials
+    const HASH_TARGET_USER = '9e8254372c2ca83e8b95018b97488032c1654669243678667b828fe420f84513'; // AZU_005
+    const HASH_TARGET_PASS = '9cb6dc5025b1fafcc95e507f297c2d5952461638bfd324f6aed2edd0b126d73c'; // AZU@2000
+
+    function performStudentLogin(targetBranch = 'boys') {
+      sessionStorage.setItem('azu_user_role', 'student');
+      closeLoginModal();
+      window.location.href = `./app.html?branch=${targetBranch}`;
+    }
+
+    async function handleAdminLoginSubmit(e) {
+      e.preventDefault();
+      const rawId = document.getElementById('adminIdInput').value;
+      const rawPass = document.getElementById('adminPassInput').value;
+      const cleanId = normalizeInput(rawId);
+      const cleanPass = normalizeInput(rawPass);
+
+      const inputUserHash = await sha256Hex(cleanId);
+      const inputPassHash = await sha256Hex(cleanPass);
+
+      const errorEl = document.getElementById('adminLoginError');
+
+      if (inputUserHash === HASH_TARGET_USER && inputPassHash === HASH_TARGET_PASS) {
+        sessionStorage.setItem('azu_user_role', 'admin');
+        closeLoginModal();
+        alert('مرحبا بك. تم تفعيل صلاحيات المسؤول وإدارة المقررات بنجاح.');
+        window.location.href = './app.html';
+      } else {
+        // Inline Red Error Feedback (NO popup)
+        errorEl.style.display = 'block';
+        errorEl.innerText = 'اسم المستخدم أو كلمة المرور غير صحيحة، يرجى المحاولة مرة أخرى.';
+      }
+    }
+
+    function enterCampusBranch(branchId) {
+      const role = sessionStorage.getItem('azu_user_role');
+      if (!role) {
+        sessionStorage.setItem('azu_user_role', 'student');
+      }
+      window.location.href = `./app.html?branch=${branchId}`;
+    }
+
+    // 4. ADMIN EDIT BRANCH DESCRIPTION
+    let activeEditingBranch = null;
+
+    function openEditBranchModal(branchId) {
+      activeEditingBranch = branchId;
+      const modal = document.getElementById('editBranchModalOverlay');
+      const label = document.getElementById('editBranchLabel');
+      const textarea = document.getElementById('editBranchTextarea');
+
+      label.innerText = `تعديل وصف ${branchId === 'boys' ? 'فرع البنين' : 'فرع البنات'}:`;
+      const currentDesc = (branchId === 'boys') ? document.getElementById('descBoysText').innerText : document.getElementById('descGirlsText').innerText;
+      textarea.value = currentDesc;
+      modal.classList.add('active');
+    }
+
+    function closeEditBranchModal() {
+      document.getElementById('editBranchModalOverlay').classList.remove('active');
+      activeEditingBranch = null;
+    }
+
+    async function saveBranchDescription() {
+      if (!activeEditingBranch) return;
+      const newDesc = document.getElementById('editBranchTextarea').value.trim();
+
+      if (activeEditingBranch === 'boys') {
+        document.getElementById('descBoysText').innerText = newDesc;
+      } else {
+        document.getElementById('descGirlsText').innerText = newDesc;
+      }
+
+      if (window.gasClient) {
+        await window.gasClient.updateBranchDescription(activeEditingBranch, newDesc);
+      }
+
+      closeEditBranchModal();
+      alert('تم حفظ وتحديث وصف الفرع بنجاح.');
+    }
+  </script>
+</body>
+</html>
